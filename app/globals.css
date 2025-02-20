@@ -70,3 +70,128 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes moveGrid {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 60px 60px;
+  }
+}
+
+@keyframes glowPulse {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+.grid-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #080808;
+  background-image: linear-gradient(
+      to right,
+      rgba(0, 255, 255, 0.1) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: moveGrid 8s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.grid-background::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 255, 255, 0.2) 0%,
+    rgba(0, 255, 255, 0.05) 50%,
+    transparent 100%
+  );
+  mix-blend-mode: screen;
+  opacity: 0.5;
+  animation: glowPulse 4s infinite ease-in-out;
+}
+
+.grid-background::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at bottom right,
+    rgba(255, 0, 255, 0.2) 0%,
+    transparent 80%
+  );
+  mix-blend-mode: screen;
+  opacity: 0.4;
+  animation: glowPulse 6s infinite alternate ease-in-out;
+}
+
+@layer utilities {
+  .gradient {
+    @apply bg-gradient-to-b from-gray-400 via-gray-200 to-gray-600;
+  }
+
+  .gradient-title {
+    @apply gradient font-extrabold tracking-tighter text-transparent bg-clip-text pb-2 pr-2;
+  }
+}
+
+.hero-image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1200px;
+}
+
+/* Floating effect */
+.hero-image {
+  transform: translateY(0px) scale(1);
+  animation: float 4s ease-in-out infinite;
+  transition: transform 0.6s ease-out, box-shadow 0.4s ease-in-out,
+    opacity 0.6s ease-out;
+  will-change: transform, box-shadow;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+}
+
+/* Hover Effect - Tilt & Glow */
+.hero-image-wrapper:hover .hero-image {
+  transform: rotateX(8deg) rotateY(6deg) scale(1.05) translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0, 200, 255, 0.4);
+}
+
+/* Scroll Effect - Smooth Fade In */
+.hero-image.scrolled {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  box-shadow: 0 10px 30px rgba(0, 200, 255, 0.2);
+}
+
+/* Floating Animation */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
