@@ -1,9 +1,3 @@
--- CreateEnum
-CREATE TYPE "DemandLevel" AS ENUM ('HIGH', 'MEDIUM', 'LOW');
-
--- CreateEnum
-CREATE TYPE "marketOutlook" AS ENUM ('POSITIVE', 'NEUTRAL', 'NEGATIVE');
-
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
@@ -69,9 +63,9 @@ CREATE TABLE "IndustryInsight" (
     "industry" TEXT NOT NULL,
     "salaryRanges" JSONB[],
     "growthRate" DOUBLE PRECISION NOT NULL,
-    "demandLevel" "DemandLevel" NOT NULL,
+    "demandLevel" TEXT NOT NULL,
     "topSkills" TEXT[],
-    "marketOutlook" "marketOutlook" NOT NULL,
+    "marketOutlook" TEXT NOT NULL,
     "keyTrends" TEXT[],
     "recommendedSkills" TEXT[],
     "lastUpdated" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
